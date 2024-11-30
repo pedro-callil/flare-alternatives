@@ -91,7 +91,7 @@ class ResultsTab(wx.Panel):
 
         env_analysis_btn = wx.Button(self, label="Sustainability analysis")
 
-        sust_str = 'CO₂ release, water and electricity usage and'
+        sust_str = 'CO₂ release, water and energy usage and'
         sust_str += ' effluent treatment (10⁶ US$/yr):'
         sustainability_text = wx.StaticText(self, -1, sust_str)
 

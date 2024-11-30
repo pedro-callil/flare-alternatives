@@ -87,14 +87,18 @@ class DataStructure:
         for i, value in enumerate(alternatives):
             if value:
                 self.carboncosts.append(random()*0.3)
-                self.watercosts.append(random()*0.3)
-                self.electricity.append(random()*0.2)
-                self.effluents.append(random()*0.2)
+                self.watercosts.append(random()*
+                                       self.carboncosts[-1])
+                self.electricity.append(random()*0.2*
+                                        self.carboncosts[-1])
+                self.effluents.append(random()*0.2*
+                                      self.carboncosts[-1])
 
         self.carboncosts, self.npvvalues, self.watercosts, \
                 self.electricity, self.effluents, self.npvlabels = \
                     (list(t) for t in
                      zip(*sorted(zip(self.carboncosts, self.npvvalues,
                                      self.watercosts, self.electricity,
-                                     self.effluents, self.npvlabels))))
+                                     self.effluents, self.npvlabels),
+                                 reverse=True)))
 

@@ -5,6 +5,7 @@ matplotlib.use('WXAgg')
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 from matplotlib.backends.backend_wx import NavigationToolbar2Wx
 from matplotlib.figure import Figure
+from matplotlib.pyplot import colormaps
 
 import numpy as np
 
@@ -16,8 +17,8 @@ class SustBarChartTab(wx.Panel):
 
     def draw(self):
 
-        if len([i for i in self.data_structure.alternatives if i]) == 0:
-            return 0
+        #if len([i for i in self.data_structure.alternatives if i]) == 0:
+        #    return 0
 
         appearance = wx.SystemSettings.GetAppearance()
         colfac256 = wx.SystemSettings.GetColour(wx.SYS_COLOUR_WINDOW)
@@ -40,8 +41,40 @@ class SustBarChartTab(wx.Panel):
         self.SetSizer(self.sizer)
         self.Fit()
 
+        cumsum_wc = []
+        cumsum_wce = []
+        for i in range(len(self.data_structure.npvlabels)):
+            cumsum_wc.append(self.data_structure.carboncosts[i]+
+                             self.data_structure.watercosts[i])
+            cumsum_wce.append(cumsum_wc[-1]+
+                             self.data_structure.electricity[i])
+
+        colors = colormaps['viridis']([0.3,0.6,0.8,1])
+
         self.axes.barh(self.data_structure.npvlabels,
-                       self.data_structure.npvvalues)
+                       self.data_structure.carboncosts,
+                       label='CO₂',
+                       color=colors[0])
+        self.axes.barh(self.data_structure.npvlabels,
+                       self.data_structure.watercosts,
+                       left=self.data_structure.carboncosts,
+                       label='Water',
+                       color=colors[1])
+        self.axes.barh(self.data_structure.npvlabels,
+                       self.data_structure.electricity,
+                       left=cumsum_wc,
+                       label='Energy',
+                       color=colors[2])
+        self.axes.barh(self.data_structure.npvlabels,
+                       self.data_structure.effluents,
+                       left=cumsum_wce,
+                       label='Effluents',
+                       color=colors[3])
+
+        self.axes.legend(ncols=4, loc='lower left',
+                         bbox_to_anchor=(0.15, 1), fontsize=8,
+                         facecolor=colfac, labelcolor=colstr)
+
         self.axes.tick_params(which="both",
                               color=colstr,
                               labelcolor=colstr,

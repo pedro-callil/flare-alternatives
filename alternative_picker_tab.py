@@ -43,7 +43,7 @@ class AlternativePickerTab(wx.Panel):
                                         'Extra penalties for:')
 
         self.water_penalty = wx.CheckBox(self, label="Water usage")
-        self.electricity_penalty = wx.CheckBox(self, label="Electricity usage")
+        self.electricity_penalty = wx.CheckBox(self, label="Energy usage")
         self.carbon_penalty = wx.CheckBox(self, label="CO₂ release")
         self.size_penalty = wx.CheckBox(self, label="Size (limited space)")
 
