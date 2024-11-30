@@ -9,6 +9,8 @@ import matplotlib
 matplotlib.use("WxAgg")
 import numpy as np
 
+from random import random
+
 class DataStructure:
 
     def __init__(self):
@@ -21,6 +23,14 @@ class DataStructure:
         self.extra_penalty_carbon = False
         self.extra_penalty_size = False
         self.alternatives = [False]*len(alternatives)
+
+        self.npvlabels = []
+        self.npvvalues = []
+
+        self.carboncosts = []
+        self.watercosts = []
+        self.electricity = []
+        self.effluents = []
 
     def __repr__(self):
         string = ""
@@ -46,4 +56,45 @@ class DataStructure:
     def flare_intensity(self):
 
         return 20.0
+
+    def net_present_values(self):
+
+
+        self.npvlabels = []
+        self.npvvalues = []
+
+        for i, value in enumerate(alternatives):
+            if value:
+                self.npvlabels.append(alternatives[i])
+                self.npvvalues.append(random())
+
+        self.npvvalues, self.npvlabels = (list(t) for t in
+                                          zip(*sorted(zip(self.npvvalues,
+                                                          self.npvlabels))))
+
+    def cwee_cost(self):
+
+        if (len(self.npvvalues) == 0 or
+                len(self.npvvalues) != len([i for i in
+                                            self.alternatives if i])):
+            self.net_present_values()
+
+        self.carboncosts = []
+        self.watercosts = []
+        self.electricity = []
+        self.effluents = []
+
+        for i, value in enumerate(alternatives):
+            if value:
+                self.carboncosts.append(random()*0.3)
+                self.watercosts.append(random()*0.3)
+                self.electricity.append(random()*0.2)
+                self.effluents.append(random()*0.2)
+
+        self.carboncosts, self.npvvalues, self.watercosts, \
+                self.electricity, self.effluents, self.npvlabels = \
+                    (list(t) for t in
+                     zip(*sorted(zip(self.carboncosts, self.npvvalues,
+                                     self.watercosts, self.electricity,
+                                     self.effluents, self.npvlabels))))
 

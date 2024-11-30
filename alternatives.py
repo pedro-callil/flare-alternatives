@@ -4,11 +4,11 @@ alternatives = ["Flaring",
                 "LNG",
                 "CNG",
                 "Electricity",
-                "Hydrogen (steam reforming)",
-                "Hydrogen (electrolysis)",
-                "Ammonia synthesis",
-                "Reinjection in gas field",
-                "Enhanced oil recovery"]
+                "H₂ (elect.)",
+                "H₂ (SMR)",
+                "NH₃",
+                "Reinjection",
+                "EOR"]
 
 ccs_alternatives = ["CO₂ Adsorption",
                     "Membranes",
