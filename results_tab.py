@@ -1,7 +1,53 @@
 import wx
+import matplotlib
+matplotlib.use('WXAgg')
+
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+from matplotlib.backends.backend_wx import NavigationToolbar2Wx
+from matplotlib.figure import Figure
 
 from field_gas_profiles import components
 from alternatives import alternatives
+
+class PieChartTab(wx.Panel):
+    def __init__(self, parent, data_structure):
+        wx.Panel.__init__(self, parent)
+
+        self.data_structure = data_structure
+
+    def draw(self):
+
+        if abs(sum(self.data_structure.components)) <= 1e-6:
+            return 0
+
+        appearance = wx.SystemSettings.GetAppearance()
+        if appearance.IsUsingDarkBackground():
+            colstr = 'white'
+            colfac = 'black'
+        else:
+            colstr = 'black'
+            colfac = 'white'
+
+        self.figure = Figure(figsize=(3.2,2),
+                             facecolor=colfac)
+        self.axes = self.figure.add_subplot(111)
+        self.canvas = FigureCanvas(self, -1, self.figure)
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+        self.sizer.Add(self.canvas, 1, wx.EXPAND)
+        self.SetSizer(self.sizer)
+        self.Fit()
+
+        wedges, tmp1 = self.axes.pie(self.data_structure.components)
+        self.axes.legend(wedges, components,
+                         loc="center left",
+                         bbox_to_anchor=(1, 0, 0.5, 1),
+                         facecolor=colfac,
+                         prop={'size': 8},
+                         labelcolor=colstr)
+        self.axes.set_title('Gas profile',
+                            fontdict={'fontsize': 8})
+        self.axes.title.set_color(colstr)
+        self.figure.subplots_adjust(left=-0.34)
 
 class ResultsTab(wx.Panel):
     def __init__(self, parent, data_structure):
@@ -35,11 +81,16 @@ class ResultsTab(wx.Panel):
         flareIntensitySizer.Add(self.flare_intensity_data,
                                 flag=wx.ALIGN_CENTER)
 
+        self.piechart = PieChartTab(self, data_structure)
+
         RightSizer = wx.BoxSizer(wx.VERTICAL)
         RightSizer.Add(startInterfaceSizer,
                        flag=wx.ALIGN_LEFT)
         RightSizer.Add((0,10))
         RightSizer.Add(flareIntensitySizer,
+                       flag=wx.ALIGN_LEFT)
+        RightSizer.Add((0,10))
+        RightSizer.Add(self.piechart,
                        flag=wx.ALIGN_LEFT)
 
         BottomSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -71,6 +122,8 @@ class ResultsTab(wx.Panel):
         self.flare_intensity_data.SetLabel(
                 str(self.data_structure.flare_intensity()))
 
-        self.data_structure.generate_pie_chart()
+        self.piechart.draw()
+
+        self.Layout()
 
         print(self.data_structure)
