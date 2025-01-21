@@ -1,8 +1,10 @@
 #! /usr/bin/env python3
 
 from field_gas_profiles import components
+from flare_intensity import get_flare_intensity
 from alternatives import alternatives
 from alternatives import ccs_alternatives
+from capex import get_capex_and_opex
 
 from matplotlib import pyplot as plt
 import matplotlib
@@ -16,8 +18,11 @@ class DataStructure:
     def __init__(self):
         self.components = [0.0]*len(components)
         self.volume = 0.0
+        self.available_gas = 0.0
+        self.emissions = 0.0
         self.carbon_capture = 0
         self.carbon_tax = 0.0
+        self.location = ""
         self.extra_penalty_water = False
         self.extra_penalty_electricity = False
         self.extra_penalty_carbon = False
@@ -55,7 +60,9 @@ class DataStructure:
 
     def flare_intensity(self):
 
-        return 20.0
+        self.emissions, self.available_gas = get_flare_intensity(self.volume,
+                                                                self.components)
+        return self.emissions, self.available_gas
 
     def net_present_values(self):
 
@@ -63,10 +70,11 @@ class DataStructure:
         self.npvlabels = []
         self.npvvalues = []
 
-        for i, value in enumerate(alternatives):
+        for i, value in enumerate(self.alternatives):
             if value:
                 self.npvlabels.append(alternatives[i])
-                self.npvvalues.append(random())
+                altcapex, altopex = get_capex_and_opex(self, alternatives[i])
+                self.npvvalues.append(altcapex + altopex)
 
         self.npvvalues, self.npvlabels = (list(t) for t in
                                           zip(*sorted(zip(self.npvvalues,

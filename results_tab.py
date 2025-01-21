@@ -46,7 +46,12 @@ class ResultsTab(wx.Panel):
         flare_intensity_text = wx.StaticText( self, -1,
                         'Flare intensity (Mscm³/yr):')
 
+        carbon_intensity_text = wx.StaticText( self, -1,
+                        'CO₂ emissions (tCO₂/yr):')
+
         self.flare_intensity_data = wx.StaticText( self, -1, '')
+
+        self.carbon_intensity_data = wx.StaticText( self, -1, '')
 
         flareIntensitySizer = wx.BoxSizer(wx.HORIZONTAL)
         flareIntensitySizer.Add((20,0))
@@ -54,6 +59,14 @@ class ResultsTab(wx.Panel):
                                 flag=wx.ALIGN_CENTER)
         flareIntensitySizer.Add((5,0))
         flareIntensitySizer.Add(self.flare_intensity_data,
+                                flag=wx.ALIGN_CENTER)
+
+        carbonIntensitySizer = wx.BoxSizer(wx.HORIZONTAL)
+        carbonIntensitySizer.Add((20,0))
+        carbonIntensitySizer.Add(carbon_intensity_text,
+                                flag=wx.ALIGN_CENTER)
+        carbonIntensitySizer.Add((5,0))
+        carbonIntensitySizer.Add(self.carbon_intensity_data,
                                 flag=wx.ALIGN_CENTER)
 
         self.piechart = PieChartTab(self, data_structure)
@@ -67,6 +80,9 @@ class ResultsTab(wx.Panel):
                        flag=wx.ALIGN_LEFT)
         RightSizer.Add((0,10))
         RightSizer.Add(flareIntensitySizer,
+                       flag=wx.ALIGN_LEFT)
+        RightSizer.Add((0,10))
+        RightSizer.Add(carbonIntensitySizer,
                        flag=wx.ALIGN_LEFT)
         RightSizer.Add((0,10))
         RightSizer.Add(self.piechart,
@@ -143,7 +159,10 @@ class ResultsTab(wx.Panel):
     def on_start_btn(self, e):
 
         self.flare_intensity_data.SetLabel(
-                str(self.data_structure.flare_intensity()))
+                "{val:.2f}".format(val=self.data_structure.flare_intensity()[1]))
+
+        self.carbon_intensity_data.SetLabel(
+                "{val:.2f}".format(val=self.data_structure.flare_intensity()[0]))
 
         self.piechart.draw()
 

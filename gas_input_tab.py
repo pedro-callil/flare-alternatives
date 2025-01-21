@@ -147,9 +147,10 @@ class GasInputTab(wx.Panel):
         self.field_choice.Clear()
 
     def change_field_menu(self, e):
+        self.data_structure.location = self.country_choice.GetString(
+                                self.country_choice.GetSelection())
         self.field_choice.Clear()
-        choices=field_choices[self.country_choice.GetString(
-                                self.country_choice.GetSelection())]
+        choices=field_choices[self.data_structure.location]
         for field in choices:
             self.field_choice.Append(field)
 
