@@ -30,7 +30,7 @@ class SustBarChartTab(wx.Panel):
             colstr = 'black'
 
         #width, height = self.GetSize()
-        self.figure = Figure(figsize=(6,4),
+        self.figure = Figure(figsize=(6,5),
                              facecolor=colfac)
         self.figure.set_tight_layout(True)
         self.axes = self.figure.add_subplot(111)
@@ -44,31 +44,31 @@ class SustBarChartTab(wx.Panel):
         cumsum_wc = []
         cumsum_wce = []
         for i in range(len(self.data_structure.npvlabels)):
-            cumsum_wc.append(self.data_structure.carboncosts[i]+
-                             self.data_structure.watercosts[i])
+            cumsum_wc.append(self.data_structure.capex[i]+
+                             self.data_structure.opex[i])
             cumsum_wce.append(cumsum_wc[-1]+
-                             self.data_structure.electricity[i])
+                             self.data_structure.carbon[i])
 
         colors = colormaps['viridis']([0.3,0.6,0.8,1])
 
         self.axes.barh(self.data_structure.npvlabels,
-                       self.data_structure.carboncosts,
-                       label='CO₂',
+                       self.data_structure.capex,
+                       label='CAPEX',
                        color=colors[0])
         self.axes.barh(self.data_structure.npvlabels,
-                       self.data_structure.watercosts,
-                       left=self.data_structure.carboncosts,
-                       label='Water',
+                       self.data_structure.opex,
+                       left=self.data_structure.capex,
+                       label='OPEX',
                        color=colors[1])
         self.axes.barh(self.data_structure.npvlabels,
-                       self.data_structure.electricity,
+                       self.data_structure.carbon,
                        left=cumsum_wc,
-                       label='Energy',
+                       label='CO₂ tax',
                        color=colors[2])
         self.axes.barh(self.data_structure.npvlabels,
-                       self.data_structure.effluents,
+                       self.data_structure.energy,
                        left=cumsum_wce,
-                       label='Effluents',
+                       label='Energy',
                        color=colors[3])
 
         self.axes.legend(ncols=4, loc='lower left',
