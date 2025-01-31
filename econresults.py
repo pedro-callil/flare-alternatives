@@ -27,7 +27,7 @@ class EconBarChartTab(wx.Panel):
             colstr = 'black'
 
         #width, height = self.GetSize()
-        self.figure = Figure(figsize=(3.5,5),
+        self.figure = Figure(figsize=(4.0,5),
                              facecolor=colfac)
         self.figure.set_tight_layout(True)
         self.axes = self.figure.add_subplot(111)

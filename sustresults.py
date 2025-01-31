@@ -72,7 +72,7 @@ class SustBarChartTab(wx.Panel):
                        color=colors[3])
 
         self.axes.legend(ncols=4, loc='lower left',
-                         bbox_to_anchor=(0.15, 1), fontsize=8,
+                         bbox_to_anchor=(0, 1), fontsize=8,
                          facecolor=colfac, labelcolor=colstr)
 
         self.axes.tick_params(which="both",

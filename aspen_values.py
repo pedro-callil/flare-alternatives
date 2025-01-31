@@ -71,7 +71,7 @@ info = {
          "OPEX":                0.8,
          "Energy":              26.71,
          "Emissions":           2.524,
-         "Product":             [27.31,35.56,38.29],
+         "Product":             [48.76,35.56,38.29],
          "Scale Multiplier":    [1.80,1.50,1.20,1.10,1.0],
          "H2S lim":             1.5e-3,
          "CO2 lim":             4e-3,
@@ -82,7 +82,7 @@ info = {
          "OPEX":                0.7,
          "Energy":              9.637,
          "Emissions":           0.837,
-         "Product":             [70.09,38.32,38.32],
+         "Product":             [38.34,38.32,38.32],
          "Carbon":              [13.31,13.31,13.31],
          "Scale Multiplier":    [2.25,1.90,1.60,1.25,1.0],
          "H2S lim":             1e-3,
@@ -166,8 +166,8 @@ prices = {
         "LNG":          380,
         "CNG":          530,
         "Methanol":     410,
-        "GTW":          52.5*24,
+        "GTW":          52.5,
         "Steam":        0.0157*2.8,
         "Carbon":       500,
-        "Energy":       0.015
+        "Energy":       1.0,
         }

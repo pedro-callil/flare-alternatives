@@ -47,7 +47,7 @@ class ResultsTab(wx.Panel):
         #                'Flare intensity (Mscm³/yr):')
 
         carbon_intensity_text = wx.StaticText( self, -1,
-                        'Flare Intensity (MtCO₂ equiv./yr):')
+                        'Flare Intensity\n(MtCO₂ equiv./yr):')
 
         #self.flare_intensity_data = wx.StaticText( self, -1, '')
 
@@ -67,7 +67,7 @@ class ResultsTab(wx.Panel):
                                 flag=wx.ALIGN_CENTER)
         carbonIntensitySizer.Add((5,0))
         carbonIntensitySizer.Add(self.carbon_intensity_data,
-                                flag=wx.ALIGN_CENTER)
+                                flag=wx.ALIGN_BOTTOM)
 
         self.piechart = PieChartTab(self, data_structure)
 
@@ -152,7 +152,7 @@ class ResultsTab(wx.Panel):
         topLevelSizer.Add((0, 10))
         topLevelSizer.Add(envSizer,
                           flag=wx.EXPAND)
-        topLevelSizer.Add((0, 900))
+        topLevelSizer.Add((0, 1000))
 
         self.SetSizer(topLevelSizer)
 

@@ -150,9 +150,9 @@ class BasicProcess:
         opex = self.opex
         carbon = carbon_tax*self.emissions
         energy = self.energy*prices["Energy"]
-        tacost = capex + opex + carbon + energy
+        tacost = capex + opex + carbon
 
-        return tacost, capex, opex, carbon, energy
+        return tacost, capex, opex-energy, carbon, energy
 
 class ChemicalAGR(BasicProcess):
     """!
