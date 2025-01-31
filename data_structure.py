@@ -4,7 +4,7 @@ from field_gas_profiles import components
 from flare_intensity import get_flare_intensity
 from alternatives import alternatives
 from alternatives import ccs_alternatives
-from capex import get_capex_and_opex
+from calculate import get_npv
 
 from matplotlib import pyplot as plt
 import matplotlib
@@ -12,6 +12,17 @@ matplotlib.use("WxAgg")
 import numpy as np
 
 from random import random
+
+name_of_parts = {"ff": "fractionation",
+                 "ngl": "NGL removal",
+                 "chemical": "chemical AGR",
+                 "membrane": "membrane AGR",
+                 "psa": "PSA AGR",
+                 "noagr": "no AGR"}
+
+def beautify(string):
+    parts = string.split("_")
+    return name_of_parts[parts[0]] + "\n" + name_of_parts[parts[1]]
 
 class DataStructure:
 
@@ -32,10 +43,10 @@ class DataStructure:
         self.npvlabels = []
         self.npvvalues = []
 
-        self.carboncosts = []
-        self.watercosts = []
-        self.electricity = []
-        self.effluents = []
+        self.capex = []
+        self.opex = []
+        self.carbon = []
+        self.energy = []
 
     def __repr__(self):
         string = ""
@@ -60,9 +71,8 @@ class DataStructure:
 
     def flare_intensity(self):
 
-        self.emissions, self.available_gas = get_flare_intensity(self.volume,
-                                                                self.components)
-        return self.emissions, self.available_gas
+        self.emissions = get_flare_intensity(self.volume, self.components)
+        return self.emissions
 
     def net_present_values(self):
 
@@ -72,12 +82,29 @@ class DataStructure:
 
         for i, value in enumerate(self.alternatives):
             if value:
-                self.npvlabels.append(alternatives[i])
-                altcapex, altopex = get_capex_and_opex(self, alternatives[i])
-                self.npvvalues.append(altcapex + altopex)
+                npv_dict, costs_dict = get_npv(self, alternatives[i])
+                if (not npv_dict == {}):
+                    self.npvlabels.append(alternatives[i])
+                    maximum = -1e12
+                    maxkey = ""
+                    for key in npv_dict.keys():
+                        if (npv_dict[key] > maximum):
+                            maximum = npv_dict[key]/1e6
+                            maxkey = key
+                    self.npvvalues.append(maximum)
+                    self.npvlabels[-1] += ("\n" + beautify(maxkey))
+                    self.capex.append(costs_dict[key][0]/1e6)
+                    self.opex.append(costs_dict[key][1]/1e6)
+                    self.carbon.append(costs_dict[key][2]/1e6)
+                    self.energy.append(costs_dict[key][3]/1e6)
 
-        self.npvvalues, self.npvlabels = (list(t) for t in
+        self.npvvalues, self.capex, self.opex, \
+            self.carbon, self.energy, self.npvlabels = (list(t) for t in
                                           zip(*sorted(zip(self.npvvalues,
+                                                          self.capex,
+                                                          self.opex,
+                                                          self.carbon,
+                                                          self.energy,
                                                           self.npvlabels))))
 
     def cwee_cost(self):
@@ -87,26 +114,11 @@ class DataStructure:
                                             self.alternatives if i])):
             self.net_present_values()
 
-        self.carboncosts = []
-        self.watercosts = []
-        self.electricity = []
-        self.effluents = []
-
-        for i, value in enumerate(alternatives):
-            if value:
-                self.carboncosts.append(random()*0.3)
-                self.watercosts.append(random()*
-                                       self.carboncosts[-1])
-                self.electricity.append(random()*0.2*
-                                        self.carboncosts[-1])
-                self.effluents.append(random()*0.2*
-                                      self.carboncosts[-1])
-
-        self.carboncosts, self.npvvalues, self.watercosts, \
-                self.electricity, self.effluents, self.npvlabels = \
-                    (list(t) for t in
-                     zip(*sorted(zip(self.carboncosts, self.npvvalues,
-                                     self.watercosts, self.electricity,
-                                     self.effluents, self.npvlabels),
-                                 reverse=True)))
+        #self.capex, self.opex, self.carbon, \
+        #        self.energy, self.npvlabels = \
+        #            (list(t) for t in
+        #             zip(*sorted(zip(self.capex, self.opex,
+        #                             self.carbon, self.energy,
+        #                             self.npvlabels),
+        #                         reverse=True)))
 
