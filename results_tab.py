@@ -23,7 +23,7 @@ class ResultsTab(wx.Panel):
 
         start_interface = wx.Button(self, label="Read data")
 
-        calc_interface = wx.Button(self, label="Calculate costs")
+        calc_interface = wx.Button(self, label="Calculate profits")
 
         startInterfaceSizer = wx.BoxSizer(wx.HORIZONTAL)
         startInterfaceSizer.Add((20,0))
@@ -43,23 +43,23 @@ class ResultsTab(wx.Panel):
         self.Bind(wx.EVT_BUTTON, self.on_calc_btn,
                   calc_interface)
 
-        flare_intensity_text = wx.StaticText( self, -1,
-                        'Flare intensity (Mscm³/yr):')
+        #flare_intensity_text = wx.StaticText( self, -1,
+        #                'Flare intensity (Mscm³/yr):')
 
         carbon_intensity_text = wx.StaticText( self, -1,
-                        'CO₂ emissions (tCO₂/yr):')
+                        'Flare Intensity (MtCO₂ equiv./yr):')
 
-        self.flare_intensity_data = wx.StaticText( self, -1, '')
+        #self.flare_intensity_data = wx.StaticText( self, -1, '')
 
         self.carbon_intensity_data = wx.StaticText( self, -1, '')
 
-        flareIntensitySizer = wx.BoxSizer(wx.HORIZONTAL)
-        flareIntensitySizer.Add((20,0))
-        flareIntensitySizer.Add(flare_intensity_text,
-                                flag=wx.ALIGN_CENTER)
-        flareIntensitySizer.Add((5,0))
-        flareIntensitySizer.Add(self.flare_intensity_data,
-                                flag=wx.ALIGN_CENTER)
+        #flareIntensitySizer = wx.BoxSizer(wx.HORIZONTAL)
+        #flareIntensitySizer.Add((20,0))
+        #flareIntensitySizer.Add(flare_intensity_text,
+        #                        flag=wx.ALIGN_CENTER)
+        #flareIntensitySizer.Add((5,0))
+        #flareIntensitySizer.Add(self.flare_intensity_data,
+        #                        flag=wx.ALIGN_CENTER)
 
         carbonIntensitySizer = wx.BoxSizer(wx.HORIZONTAL)
         carbonIntensitySizer.Add((20,0))
@@ -79,9 +79,9 @@ class ResultsTab(wx.Panel):
         RightSizer.Add(startInterfaceSizer,
                        flag=wx.ALIGN_LEFT)
         RightSizer.Add((0,10))
-        RightSizer.Add(flareIntensitySizer,
-                       flag=wx.ALIGN_LEFT)
-        RightSizer.Add((0,10))
+        #RightSizer.Add(flareIntensitySizer,
+        #               flag=wx.ALIGN_LEFT)
+        #RightSizer.Add((0,10))
         RightSizer.Add(carbonIntensitySizer,
                        flag=wx.ALIGN_LEFT)
         RightSizer.Add((0,10))
@@ -107,8 +107,8 @@ class ResultsTab(wx.Panel):
 
         env_analysis_btn = wx.Button(self, label="Sustainability analysis")
 
-        sust_str = 'CO₂ release, water and energy usage and'
-        sust_str += ' effluent treatment (10⁶ US$/yr):'
+        sust_str = 'Net Present Costs from CO₂ release and energy usage, besides'
+        sust_str += ' CAPEX and OPEX (10⁶ US$):'
         sustainability_text = wx.StaticText(self, -1, sust_str)
 
         sustBtnSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -152,17 +152,17 @@ class ResultsTab(wx.Panel):
         topLevelSizer.Add((0, 10))
         topLevelSizer.Add(envSizer,
                           flag=wx.EXPAND)
-        topLevelSizer.Add((0, 800))
+        topLevelSizer.Add((0, 900))
 
         self.SetSizer(topLevelSizer)
 
     def on_start_btn(self, e):
 
-        self.flare_intensity_data.SetLabel(
-                "{val:.2f}".format(val=self.data_structure.flare_intensity()[1]))
+        #self.flare_intensity_data.SetLabel(
+        #        "{val:.2f}".format(val=self.data_structure.flare_intensity()[1]))
 
         self.carbon_intensity_data.SetLabel(
-                "{val:.2f}".format(val=self.data_structure.flare_intensity()[0]))
+                "{val:.2f}".format(val=self.data_structure.flare_intensity()))
 
         self.piechart.draw()
 
