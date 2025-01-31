@@ -22,14 +22,11 @@ class AlternativePickerTab(wx.Panel):
         self.Bind(wx.EVT_CHECKLISTBOX, self.get_checked_alternatives,
                   self.alternative_list_selection)
 
-        ccs_text = wx.StaticText( self, -1,
-                            'Carbon Capture solution:')
+        #ccs_text = wx.StaticText( self, -1, 'Carbon Capture solution:')
 
-        self.ccs_is_considered = wx.Choice(self,
-                                      choices=ccs_alternatives)
+        #self.ccs_is_considered = wx.Choice(self, choices=ccs_alternatives)
 
-        self.Bind(wx.EVT_CHOICE, self.get_ccs_alternative,
-                  self.ccs_is_considered)
+        #self.Bind(wx.EVT_CHOICE, self.get_ccs_alternative, self.ccs_is_considered)
 
         carbon_tax_text = wx.StaticText(self, -1,
                                         'Carbon tax (US$/ton):')
@@ -39,22 +36,17 @@ class AlternativePickerTab(wx.Panel):
         self.Bind(wx.EVT_TEXT, self.get_carbon_tax,
                   self.carbon_tax_input)
 
-        extra_penalties_text = wx.StaticText(self, -1,
-                                        'Extra penalties for:')
+        #extra_penalties_text = wx.StaticText(self, -1, 'Extra penalties for:')
 
-        self.water_penalty = wx.CheckBox(self, label="Water usage")
-        self.electricity_penalty = wx.CheckBox(self, label="Energy usage")
-        self.carbon_penalty = wx.CheckBox(self, label="CO₂ release")
-        self.size_penalty = wx.CheckBox(self, label="Size (limited space)")
+        #self.water_penalty = wx.CheckBox(self, label="Water usage")
+        #self.electricity_penalty = wx.CheckBox(self, label="Energy usage")
+        #self.carbon_penalty = wx.CheckBox(self, label="CO₂ release")
+        #self.size_penalty = wx.CheckBox(self, label="Size (limited space)")
 
-        self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_water,
-                  self.water_penalty)
-        self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_electricity,
-                  self.electricity_penalty)
-        self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_carbon,
-                  self.carbon_penalty)
-        self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_size,
-                  self.size_penalty)
+        #self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_water, self.water_penalty)
+        #self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_electricity, self.electricity_penalty)
+        #self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_carbon, self.carbon_penalty)
+        #self.Bind(wx.EVT_CHECKBOX, self.get_extra_penalty_size, self.size_penalty)
 
         LeftSizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -64,32 +56,25 @@ class AlternativePickerTab(wx.Panel):
 
         RightSizer = wx.BoxSizer(wx.VERTICAL)
 
-        RightSizer.Add(ccs_text,
-                           flag=wx.ALIGN_LEFT)
-        RightSizer.Add((0,10))
-        RightSizer.Add(self.ccs_is_considered,
-                           flag=wx.ALIGN_LEFT)
-        RightSizer.Add((0,10))
+        #RightSizer.Add(ccs_text, flag=wx.ALIGN_LEFT)
+        #RightSizer.Add((0,10))
+        #RightSizer.Add(self.ccs_is_considered, flag=wx.ALIGN_LEFT)
+        #RightSizer.Add((0,10))
         RightSizer.Add(carbon_tax_text,
                            flag=wx.ALIGN_LEFT)
         RightSizer.Add((0,10))
         RightSizer.Add(self.carbon_tax_input,
                            flag=wx.ALIGN_LEFT)
         RightSizer.Add((0,10))
-        RightSizer.Add(extra_penalties_text,
-                           flag=wx.ALIGN_LEFT)
-        RightSizer.Add((0,5))
-        RightSizer.Add(self.water_penalty,
-                           flag=wx.ALIGN_LEFT)
-        RightSizer.Add((0,5))
-        RightSizer.Add(self.electricity_penalty,
-                           flag=wx.ALIGN_LEFT)
-        RightSizer.Add((0,5))
-        RightSizer.Add(self.carbon_penalty,
-                           flag=wx.ALIGN_LEFT)
-        RightSizer.Add((0,5))
-        RightSizer.Add(self.size_penalty,
-                           flag=wx.ALIGN_LEFT)
+        #RightSizer.Add(extra_penalties_text, flag=wx.ALIGN_LEFT)
+        #RightSizer.Add((0,5))
+        #RightSizer.Add(self.water_penalty, flag=wx.ALIGN_LEFT)
+        #RightSizer.Add((0,5))
+        #RightSizer.Add(self.electricity_penalty, flag=wx.ALIGN_LEFT)
+        #RightSizer.Add((0,5))
+        #RightSizer.Add(self.carbon_penalty,flag=wx.ALIGN_LEFT)
+        #RightSizer.Add((0,5))
+        #RightSizer.Add(self.size_penalty,flag=wx.ALIGN_LEFT)
 
         BottomSizer = wx.BoxSizer(wx.HORIZONTAL)
         BottomSizer.Add((20,0))
