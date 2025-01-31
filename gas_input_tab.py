@@ -57,7 +57,7 @@ class GasInputTab(wx.Panel):
             self.gas_profiles[-1].append(wx.TextCtrl(self, wx.ID_ANY, '0.0'))
 
         gas_volume_label = wx.StaticText(self, -1,
-                                         'Then, enter flared gas volume (Mscm³/yr):')
+                                         'Then, enter flared gas volume (MMSCFD):')
         self.gas_volume = wx.TextCtrl(self, wx.ID_ANY, '0.0')
 
         self.Bind(wx.EVT_TEXT, self.store_volume, self.gas_volume)
@@ -170,6 +170,6 @@ class GasInputTab(wx.Panel):
 
     def store_volume(self, e):
         try:
-            self.data_structure.volume = float(self.gas_volume.GetValue())
+            self.data_structure.volume = float(self.gas_volume.GetValue())*1e6
         except ValueError:
             self.data_structure.volume = 0.0
