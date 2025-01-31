@@ -2,14 +2,14 @@
 
 alternatives = ["LNG",
                 "CNG",
-                "GTW (CCGT)",
-                "GTW (CHP)",
-                "GTW (NGT)",
-                "GTW (GEs)",
-                "Green Methanol",
+                "Gray Methanol",
                 "Turquoise Methanol",
-                "NGL",
-                "FNGLs"]
+                "GTW (CCGT)",
+                "GTW (CCGT+CCS)",
+                "GTW (NGT)",
+                "GTW (NGT+CHP)",
+                "GTW (NGT+CHP+CCS)",
+                "GTW (NGE)"]
 
 ccs_alternatives = ["CO₂ Adsorption",
                     "No capture"]
